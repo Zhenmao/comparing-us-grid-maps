@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comparing US Grid Maps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chivo+Mono&family=Chivo:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="intro">
+        <h1>Comparing US Grid Maps</h1>
+
+        <p
+          >This is a remake of
+          <a
+            href="https://gist.github.com/officeofjane/2c3ed88c4be050d92765de912d71b7c4"
+            target="_blank"
+            >US Grid Maps</a
+          >. Instead of showing one configuration at a time, all 14
+          configurations are shown for a quick visual comparison.</p
+        >
+
+        <p
+          >For comparison using quantitative measures, please check out
+          <a
+            href="https://kristw.medium.com/whose-grid-map-is-better-quality-metrics-for-grid-map-layouts-e3d6075d9e80"
+            target="_blank"
+            >Krist Wongsuphasawat's article</a
+          >
+          and
+          <a
+            href="https://observablehq.com/@severo/square-grid-maps-of-the-usa"
+            target="_blank"
+            >Sylvain Lesage's notebook</a
+          >.</p
+        >
+      </div>
+
+      <div class="grid" id="grid"></div>
+
+      <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+      <script type="module" src="js/main.js"></script>
+    </main>
+  </body>
+</html>
