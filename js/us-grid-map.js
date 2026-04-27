@@ -1,7 +1,8 @@
 export default class USGridMap {
-  constructor({ el, data }) {
+  constructor({ el, data, highlighted }) {
     this.el = el;
     this.data = data;
+    this.highlighted = highlighted;
     this.drawMap();
   }
 
@@ -42,23 +43,43 @@ export default class USGridMap {
 
     cell
       .append("rect")
-      .attr("class", ([col, row]) =>
-        stateByCoords.get(getCoords(col, row))
-          ? "cell__rect"
-          : "cell__rect--empty",
-      )
+      .attr("class", "cell__rect")
       .attr("rx", rx)
       .attr("width", cellSize)
       .attr("height", cellSize);
 
-    cell
+    this.state = cell
       .filter(([col, row]) => stateByCoords.get(getCoords(col, row)))
+      .classed("state", true)
+      .each((d) => {
+        const [col, row] = d;
+        d.data = stateByCoords.get(getCoords(col, row));
+      })
+      .on("click", (event, d) => {
+        this.el.dispatchEvent(
+          new CustomEvent("highlightchange", {
+            bubbles: true,
+            detail: {
+              state: d.data.code,
+            },
+          }),
+        );
+      });
+
+    this.state
       .append("text")
       .attr("class", "cell__label")
       .attr("x", cellSize / 2)
       .attr("y", cellSize / 2)
       .attr("text-anchor", "middle")
       .attr("dy", "0.32em")
-      .text(([col, row]) => stateByCoords.get(getCoords(col, row)).code);
+      .text((d) => d.data.code);
+
+    this.state.append("title").text((d) => d.data.state);
+  }
+
+  highlight(highlighted) {
+    this.highlighted = highlighted;
+    this.state.classed("highlighted", (d) => highlighted.has(d.data.code));
   }
 }

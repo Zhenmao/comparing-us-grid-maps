@@ -44,6 +44,7 @@ svg {
   --color-accent: #b95c34;
   --color-state: #b95c34;
   --color-empty: #cfcdc4;
+  --color-state-highlighted: #34baa8;
 }
 
 body {
@@ -96,12 +97,21 @@ h2 {
   gap: 1rem;
 }
 
-.cell__rect {
-  fill: var(--color-state);
+.state {
+  cursor: pointer;
 }
 
-.cell__rect--empty {
+.cell__rect {
   fill: var(--color-empty);
+}
+
+.state .cell__rect {
+  fill: var(--color-state);
+  transition: fill 0.15s;
+}
+
+.state.highlighted .cell__rect {
+  fill: var(--color-state-highlighted);
 }
 
 .cell__label {
@@ -109,4 +119,5 @@ h2 {
   font-weight: var(--font-weight-mono);
   font-size: var(--font-size-md);
   fill: var(--color-bg);
+  pointer-events: none;
 }

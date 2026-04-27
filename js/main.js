@@ -4,9 +4,20 @@ Promise.all([
   d3.csv("data/publication-grids.csv"),
   d3.csv("data/links.csv"),
 ]).then(([grids, links]) => {
-  console.log({ grids, links });
+  const highlighted = new Set();
+  const maps = Array.from({ length: links.length });
 
-  const grid = d3.select("#grid");
+  const grid = d3.select("#grid").on("highlightchange", (event) => {
+    const { state } = event.detail;
+    if (highlighted.has(state)) {
+      highlighted.delete(state);
+    } else {
+      highlighted.add(state);
+    }
+    maps.forEach((map) => {
+      map.highlight(highlighted);
+    });
+  });
 
   const grouped = d3.group(grids, (d) => d.publication);
 
@@ -35,9 +46,9 @@ Promise.all([
     .append("div")
     .attr("class", "card__body")
     .append("div")
-    .each(function ({ publication }) {
+    .each(function ({ publication }, i) {
       const data = grouped.get(publication);
-      new USGridMap({ el: this, data });
+      maps[i] = new USGridMap({ el: this, data });
     });
 
   card
